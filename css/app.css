@@ -135,7 +135,7 @@ a:hover { text-decoration: underline; }
 
 .lang-select,
 .icon-btn {
-  height: 32px;
+  height: 30px;
   border: 1px solid var(--border);
   background: var(--bg-elev);
   color: var(--text);
@@ -144,9 +144,20 @@ a:hover { text-decoration: underline; }
 
 .lang-select { padding: 0 8px; font-size: 12px; }
 
+a.icon-btn { text-decoration: none; }
+
 .icon-btn {
-  width: 32px;
+  width: 30px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: var(--bg-soft);
+  color: var(--text);
 }
 
 main.page {
@@ -157,7 +168,7 @@ main.page {
 }
 
 .page-head { margin-bottom: 28px; }
-.page-head h1 { margin: 0 0 8px; font-size: 32px; letter-spacing: -0.04em; }
+.page-head h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: -0.04em; }
 .page-head p { margin: 0; color: var(--muted); }
 
 .hero {
@@ -222,12 +233,12 @@ main.page {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 40px;
-  padding: 8px 16px;
+  gap: 6px;
+  min-height: 32px;
+  padding: 5px 12px;
   border: 1px solid transparent;
-  border-radius: 10px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
@@ -258,7 +269,8 @@ main.page {
 }
 
 .btn-wide { width: 100%; }
-.btn-sm { min-height: 32px; padding: 4px 10px; font-size: 12px; }
+.btn-sm { min-height: 28px; padding: 3px 8px; font-size: 12px; }
+.btn-lg { min-height: 40px; padding: 8px 18px; font-size: 15px; border-radius: 10px; }
 
 .form-group { margin-bottom: 16px; }
 .form-group label, .label {
@@ -391,7 +403,7 @@ textarea.mono, .mono { font-family: var(--mono); font-size: 12px; line-height: 1
 .empty-state h2 { margin: 0 0 8px; }
 .empty-state p { color: var(--muted); }
 
-.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; align-items: center; }
 
 .tpl-item {
   width: 100%;

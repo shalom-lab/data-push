@@ -10,7 +10,7 @@
 [![BYOK](https://img.shields.io/badge/BYOK-local%20token-58a6ff)](https://shalom-lab.github.io/data-push/settings.html)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-[English](#-english) · [在线使用](https://shalom-lab.github.io/data-push/)
+[English](#-english) · [在线使用](https://shalom-lab.github.io/data-push/) · [仓库](https://github.com/shalom-lab/data-push)
 
 </div>
 
@@ -69,7 +69,27 @@ npx --yes serve .
 }
 ```
 
-字段类型：`text` · `textarea` · `url` · `select` · `date` · `number` · `checkbox` · `radio` · `array`
+### 支持的字段类型
+
+| 类型 | 界面 | 必填怎么算 | 额外属性 |
+|------|------|------------|----------|
+| `text` | 单行文本 | `required: true` 时不能为空 | `default` · `placeholder` |
+| `textarea` | 多行文本 | 同上 | `default` · `placeholder` |
+| `url` | 链接输入 | 同上 | `default` · `placeholder` |
+| `number` | 数字 | 同上；空则用 `default` 或空字符串 | `default` |
+| `date` | 日期选择 | 同上 | `default` |
+| `select` | 下拉 | 同上 | **必须** `options: []`，可选 `default` |
+| `radio` | 单选组 | 同上 | **必须** `options: []`，可选 `default` |
+| `checkbox` | 复选 | 不按空校验，只提交 true/false | `default`（布尔） |
+| `array` | 标签（回车或空格添加） | `required: true` 时至少 1 个标签 | `default: []` · `placeholder` |
+
+### 必填规则
+
+- 只有写了 `"required": true` 才会拦截提交；未写或 `false` 都可空
+- 必填的 `array` 不能是 `[]`
+- 必填的文本 / 链接 / 下拉 / 单选 / 日期 / 数字不能是空字符串
+- 提交时会自动追加 `timestamp`（ISO 时间），不需要在模板里声明
+- 模板必须有 `name`、`filename`、`fieldOrder`、`fields`；`fieldOrder` 与 `fields` 的键要一一对应
 
 ## 🛠️ 发布
 
@@ -91,7 +111,9 @@ MIT · 见 [LICENSE](LICENSE)
 
 ## English
 
-A BYOK static site that appends structured JSON to any GitHub repo using custom templates. Token stays in your browser; CI deploys Pages on every push to `main`.
+A BYOK static site that appends structured JSON to any GitHub repo using custom templates. Token stays in your browser; CI deploys Pages on every push to `main`. Repo: [shalom-lab/data-push](https://github.com/shalom-lab/data-push).
+
+Field types: `text` · `textarea` · `url` · `number` · `date` · `select` · `radio` · `checkbox` · `array`. Only `"required": true` blocks submit (`array` needs at least one tag). `select` / `radio` need `options`. Each submit adds `timestamp`.
 
 ---
 

@@ -19,6 +19,7 @@ const I18N = {
       docs: '文档',
       settings: '设置',
       theme: '切换主题',
+      repo: '打开 GitHub 仓库',
       byok: '配置 Token',
       tokenReady: '已连接'
     },
@@ -207,6 +208,7 @@ const I18N = {
       docs: 'Docs',
       settings: 'Settings',
       theme: 'Toggle theme',
+      repo: 'Open GitHub repo',
       byok: 'Add token',
       tokenReady: 'Connected'
     },
