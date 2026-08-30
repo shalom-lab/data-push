@@ -5,7 +5,11 @@ const DEFAULT_PREFS = {
   lastTemplate: '',
   lastBranch: '',
   commitMessage: 'Add new entry via Data Push',
-  remember: true
+  remember: true,
+  templateRepo: '',
+  templatePath: 'data-push/templates.json',
+  templateBranch: '',
+  templateAutoSync: true
 };
 
 const store = {

@@ -114,11 +114,42 @@ const ui = {
       UNAUTHORIZED: 'error.unauthorized',
       ACCESS_DENIED: 'error.accessDenied',
       FORBIDDEN: 'error.accessDenied',
-      NOT_FOUND: 'error.notFound'
+      NOT_FOUND: 'error.notFound',
+      NO_SYNC: 'sync.notConfigured'
     };
     return map[msg] ? t(map[msg]) : msg;
   }
 };
+
+function bindRepoCombo(input, list, getRepos, onPick) {
+  if (!input || !list) return;
+  const filter = () => {
+    const repos = getRepos() || [];
+    const q = input.value.trim().toLowerCase();
+    const items = repos.filter((r) => !q || r.full_name.toLowerCase().includes(q)).slice(0, 40);
+    list.innerHTML = items
+      .map(
+        (r) =>
+          `<div class="combo-item" data-full="${escapeHtml(r.full_name)}">${escapeHtml(
+            r.full_name
+          )}<small>${r.private ? 'private' : 'public'}</small></div>`
+      )
+      .join('');
+    list.classList.toggle('open', items.length > 0);
+  };
+  input.addEventListener('focus', filter);
+  input.addEventListener('input', filter);
+  list.addEventListener('mousedown', (e) => {
+    const item = e.target.closest('.combo-item');
+    if (!item) return;
+    input.value = item.dataset.full;
+    list.classList.remove('open');
+    onPick?.(item.dataset.full);
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.combo')) list.classList.remove('open');
+  });
+}
 
 function escapeHtml(str) {
   return String(str)

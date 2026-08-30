@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   await GDP.boot('templates');
   draft = structuredClone(getTemplates());
   bindTemplatePage();
+  refreshSyncHint();
+  if (templateSync.configured() && store.prefs.templateAutoSync) {
+    try {
+      const result = await templateSync.pull();
+      if (result.missing) ui.showToast(t('sync.missing'));
+      else {
+        draft = structuredClone(getTemplates());
+        ui.showToast(t('sync.pulled'));
+      }
+    } catch (err) {
+      ui.showToast(ui.mapError(err), 'error');
+    }
+  }
   renderList();
   const first = Object.keys(draft)[0];
   if (first) selectTemplate(first);
@@ -13,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 document.addEventListener('gdp:langchange', () => {
+  refreshSyncHint();
   renderList();
   if (activeKey && draft[activeKey]) renderEditor();
 });
@@ -53,6 +67,60 @@ function bindTemplatePage() {
   };
   document.getElementById('tabVisual').onclick = () => setMode('visual');
   document.getElementById('tabJson').onclick = () => setMode('json');
+  document.getElementById('pullTemplates').onclick = () => runPull();
+  document.getElementById('pushTemplates').onclick = () => runPush();
+}
+
+function refreshSyncHint() {
+  const hint = document.getElementById('syncHint');
+  if (!hint) return;
+  hint.textContent = templateSync.configured()
+    ? t('sync.dest', { dest: templateSync.destLabel() })
+    : t('sync.notConfigured');
+}
+
+async function runPull() {
+  const btn = document.getElementById('pullTemplates');
+  ui.setBusy(btn, true);
+  try {
+    const result = await templateSync.pull();
+    if (result.missing) {
+      ui.showToast(t('sync.missing'));
+    } else {
+      draft = structuredClone(getTemplates());
+      activeKey = draft[activeKey] ? activeKey : Object.keys(draft)[0] || '';
+      renderList();
+      if (activeKey) renderEditor();
+      else renderEmpty();
+      ui.showToast(t('sync.pulled'));
+    }
+  } catch (err) {
+    ui.showToast(ui.mapError(err), 'error');
+  } finally {
+    ui.setBusy(btn, false, 'templatesPage.pull');
+    btn.dataset.label = t('templatesPage.pull');
+    btn.textContent = t('templatesPage.pull');
+  }
+}
+
+async function runPush() {
+  syncFromEditor();
+  const btn = document.getElementById('pushTemplates');
+  ui.setBusy(btn, true);
+  try {
+    validateTemplates(draft);
+    const result = await templateSync.push(draft);
+    draft = result.templates;
+    renderList();
+    if (activeKey) renderEditor();
+    ui.showToast(t('sync.pushed'));
+  } catch (err) {
+    ui.showToast(ui.mapError(err), 'error');
+  } finally {
+    ui.setBusy(btn, false, 'templatesPage.push');
+    btn.dataset.label = t('templatesPage.push');
+    btn.textContent = t('templatesPage.push');
+  }
 }
 
 function setMode(next) {
@@ -277,17 +345,33 @@ function addTemplate() {
   selectTemplate(key);
 }
 
-function saveAll() {
+async function saveAll() {
   syncFromEditor();
+  const btn = document.getElementById('saveAll');
   try {
     validateTemplates(draft);
     const ordered = orderTemplates(draft);
     draft = ordered;
     store.setTemplates(ordered, formatTemplatesText(ordered));
+    if (store.prefs.templateAutoSync && templateSync.configured()) {
+      ui.setBusy(btn, true);
+      await templateSync.push(ordered);
+      ui.showToast(t('sync.pushed'));
+    } else {
+      ui.showToast(t('templates.successSave'));
+    }
     renderList();
     if (activeKey) renderEditor();
-    ui.showToast(t('templates.successSave'));
   } catch (err) {
-    ui.showToast(`${t('templates.errorFormat')}: ${err.message}`, 'error');
+    const msg = err.message && String(err.message).includes('Template')
+      ? `${t('templates.errorFormat')}: ${err.message}`
+      : ui.mapError(err);
+    ui.showToast(msg, 'error');
+  } finally {
+    if (btn) {
+      ui.setBusy(btn, false, 'templatesPage.saveAll');
+      btn.dataset.label = t('templatesPage.saveAll');
+      btn.textContent = t('templatesPage.saveAll');
+    }
   }
 }

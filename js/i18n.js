@@ -109,7 +109,25 @@ const I18N = {
       saveAll: '保存全部',
       import: '导入',
       export: '导出',
-      empty: '还没有模板，点击新建或恢复默认。'
+      empty: '还没有模板，点击新建或恢复默认。',
+      pull: '从仓库拉取',
+      push: '推送到仓库'
+    },
+    sync: {
+      title: '模板仓库同步',
+      lead: '模板以一份 JSON 存在指定仓库，本机只做缓存。换浏览器也能拉下来。',
+      repo: '同步仓库',
+      path: '模板文件路径',
+      branch: '分支（可空，用默认分支）',
+      auto: '打开模板页时自动拉取；保存时自动推送',
+      pull: '从仓库拉取',
+      push: '推送到仓库',
+      pulled: '已从仓库拉取模板',
+      pushed: '模板已写入仓库',
+      missing: '仓库里还没有该文件，保存或推送后会创建',
+      notConfigured: '请先在设置里指定模板同步仓库和路径',
+      dest: '同步：{dest}',
+      viewFile: '在仓库中查看模板文件'
     },
     historyPage: {
       title: '推送历史',
@@ -279,7 +297,25 @@ const I18N = {
       saveAll: 'Save all',
       import: 'Import',
       export: 'Export',
-      empty: 'No templates yet. Create one or restore defaults.'
+      empty: 'No templates yet. Create one or restore defaults.',
+      pull: 'Pull from repo',
+      push: 'Push to repo'
+    },
+    sync: {
+      title: 'Template repo sync',
+      lead: 'Templates live as one JSON file in a repo. This browser only caches them.',
+      repo: 'Sync repository',
+      path: 'Template file path',
+      branch: 'Branch (empty = default)',
+      auto: 'Auto-pull when opening Templates; auto-push on save',
+      pull: 'Pull from repo',
+      push: 'Push to repo',
+      pulled: 'Templates pulled from the repository',
+      pushed: 'Templates written to the repository',
+      missing: 'File is not in the repo yet. Save or push to create it.',
+      notConfigured: 'Set a template sync repo and path in Settings first',
+      dest: 'Sync: {dest}',
+      viewFile: 'View template file on GitHub'
     },
     historyPage: {
       title: 'History',

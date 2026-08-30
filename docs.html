@@ -20,6 +20,7 @@
         <a href="#start">快速开始</a>
         <a href="#template">模板格式</a>
         <a href="#fields">字段类型</a>
+        <a href="#sync">模板同步</a>
       </aside>
       <article id="docsZh" class="card docs-article">
         <h2 id="byok">BYOK（自带密钥）</h2>
@@ -51,6 +52,8 @@
           <li><code>array</code>：回车或空格添加标签</li>
         </ul>
         <p>提交时在对象上追加 <code>timestamp</code>，再写入仓库里的 JSON 数组。</p>
+        <h2 id="sync">模板同步</h2>
+        <p>在设置里指定「同步仓库 + 路径」（默认 <code>data-push/templates.json</code>）。模板整份覆盖写入该文件，本机 <code>localStorage</code> 只做缓存。打开模板页可自动拉取，保存可自动推送，也可以手动拉取/推送。换设备和清缓存后，用同一 Token 再拉即可。</p>
       </article>
       <article id="docsEn" class="card docs-article" hidden>
         <h2 id="byok">BYOK</h2>
@@ -82,6 +85,8 @@
           <li><code>array</code>: add tags with Enter or Space</li>
         </ul>
         <p>Each submit appends an object (plus <code>timestamp</code>) to the JSON array in the repo.</p>
+        <h2 id="sync">Template sync</h2>
+        <p>In Settings, pick a sync repo and path (default <code>data-push/templates.json</code>). The whole template dictionary is written to that file. <code>localStorage</code> is only a cache. Templates can auto-pull on open and auto-push on save.</p>
       </article>
     </div>
   </main>

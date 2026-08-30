@@ -15,6 +15,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   gated.hidden = true;
   work.hidden = false;
+  if (templateSync.configured() && store.prefs.templateAutoSync) {
+    try {
+      const result = await templateSync.pull();
+      if (result.missing) {
+        /* keep local cache */
+      }
+    } catch {
+      /* offline / permission: keep local */
+    }
+  }
   fillTemplateSelect();
   bindPushEvents();
   await loadReposSafe();

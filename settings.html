@@ -44,6 +44,37 @@
           </select>
         </div>
       </section>
+      <section class="card card-span">
+        <h3 data-i18n="sync.title"></h3>
+        <p data-i18n="sync.lead"></p>
+        <div class="field-grid">
+          <div class="form-group">
+            <label data-i18n="sync.repo"></label>
+            <div class="combo">
+              <input id="syncRepo" autocomplete="off" data-i18n-placeholder="push.repoPlaceholder" />
+              <div id="syncRepoList" class="combo-list"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="sync.path"></label>
+            <input id="syncPath" class="mono" />
+          </div>
+          <div class="form-group">
+            <label data-i18n="sync.branch"></label>
+            <input id="syncBranch" />
+          </div>
+        </div>
+        <label class="check-row">
+          <input type="checkbox" id="syncAuto" />
+          <span data-i18n="sync.auto"></span>
+        </label>
+        <div class="toolbar" style="margin-top:16px">
+          <button type="button" class="btn" id="syncPull" data-i18n="sync.pull"></button>
+          <button type="button" class="btn btn-ghost" id="syncPush" data-i18n="sync.push"></button>
+        </div>
+        <p id="syncStatus" class="meta-row"></p>
+        <p><a id="syncFileLink" hidden target="_blank" rel="noreferrer" data-i18n="sync.viewFile"></a></p>
+      </section>
       <section class="card">
         <h3 data-i18n="settingsPage.prefs"></h3>
         <label class="check-row">
@@ -70,6 +101,7 @@
   <script src="js/ui.js"></script>
   <script src="js/github.js"></script>
   <script src="js/templates.js"></script>
+  <script src="js/sync.js"></script>
   <script src="js/form.js"></script>
   <script src="js/shell.js"></script>
   <script src="js/page-settings.js"></script>

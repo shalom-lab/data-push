@@ -20,8 +20,11 @@
       <button type="button" class="btn btn-sm btn-ghost" id="importTemplates" data-i18n="templatesPage.import"></button>
       <button type="button" class="btn btn-sm btn-ghost" id="exportTemplates" data-i18n="templatesPage.export"></button>
       <button type="button" class="btn btn-sm btn-ghost" id="resetDefaults" data-i18n="templatesPage.reset"></button>
+      <button type="button" class="btn btn-sm" id="pullTemplates" data-i18n="templatesPage.pull"></button>
+      <button type="button" class="btn btn-sm btn-muted" id="pushTemplates" data-i18n="templatesPage.push"></button>
       <input id="importFile" type="file" accept=".json,application/json" hidden />
     </div>
+    <p id="syncHint" class="meta-row" style="margin-bottom:16px"></p>
     <div class="split">
       <aside class="card">
         <h3 data-i18n="templatesPage.list"></h3>
@@ -42,6 +45,7 @@
   <script src="js/ui.js"></script>
   <script src="js/github.js"></script>
   <script src="js/templates.js"></script>
+  <script src="js/sync.js"></script>
   <script src="js/form.js"></script>
   <script src="js/shell.js"></script>
   <script src="js/page-templates.js"></script>

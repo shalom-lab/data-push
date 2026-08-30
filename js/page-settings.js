@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   remember.onchange = () => store.setPrefs({ remember: remember.checked });
   commit.onchange = () => store.setPrefs({ commitMessage: commit.value.trim() });
+  bindTemplateSync();
   theme.onchange = () => {
     store.setTheme(theme.value);
     ui.applyTheme();
@@ -82,6 +83,104 @@ document.addEventListener('DOMContentLoaded', async () => {
     location.reload();
   };
 });
+
+function bindTemplateSync() {
+  const repoInput = document.getElementById('syncRepo');
+  const pathInput = document.getElementById('syncPath');
+  const branchInput = document.getElementById('syncBranch');
+  const auto = document.getElementById('syncAuto');
+  repoInput.value = store.prefs.templateRepo || '';
+  pathInput.value = store.prefs.templatePath || 'data-push/templates.json';
+  branchInput.value = store.prefs.templateBranch || '';
+  auto.checked = store.prefs.templateAutoSync !== false;
+  refreshSyncStatus();
+
+  let repos = [];
+  bindRepoCombo(repoInput, document.getElementById('syncRepoList'), () => repos, (full) => {
+    store.setPrefs({ templateRepo: full });
+    refreshSyncStatus();
+  });
+  repoInput.addEventListener('change', () => {
+    store.setPrefs({ templateRepo: repoInput.value.trim() });
+    refreshSyncStatus();
+  });
+  pathInput.addEventListener('change', () => {
+    store.setPrefs({ templatePath: pathInput.value.trim() || 'data-push/templates.json' });
+    refreshSyncStatus();
+  });
+  branchInput.addEventListener('change', () => {
+    store.setPrefs({ templateBranch: branchInput.value.trim() });
+    refreshSyncStatus();
+  });
+  auto.onchange = () => store.setPrefs({ templateAutoSync: auto.checked });
+
+  document.getElementById('syncPull').onclick = async () => {
+    persistSyncFields();
+    const btn = document.getElementById('syncPull');
+    ui.setBusy(btn, true);
+    try {
+      const result = await templateSync.pull();
+      if (result.missing) ui.showToast(t('sync.missing'));
+      else ui.showToast(t('sync.pulled'));
+      if (result.htmlUrl) {
+        const link = document.getElementById('syncFileLink');
+        link.hidden = false;
+        link.href = result.htmlUrl;
+      }
+    } catch (err) {
+      ui.showToast(ui.mapError(err), 'error');
+    } finally {
+      ui.setBusy(btn, false, 'sync.pull');
+      btn.dataset.label = t('sync.pull');
+      btn.textContent = t('sync.pull');
+    }
+  };
+
+  document.getElementById('syncPush').onclick = async () => {
+    persistSyncFields();
+    const btn = document.getElementById('syncPush');
+    ui.setBusy(btn, true);
+    try {
+      const result = await templateSync.push(getTemplates());
+      ui.showToast(t('sync.pushed'));
+      if (result.htmlUrl) {
+        const link = document.getElementById('syncFileLink');
+        link.hidden = false;
+        link.href = result.htmlUrl;
+      }
+    } catch (err) {
+      ui.showToast(ui.mapError(err), 'error');
+    } finally {
+      ui.setBusy(btn, false, 'sync.push');
+      btn.dataset.label = t('sync.push');
+      btn.textContent = t('sync.push');
+    }
+  };
+
+  if (store.token) {
+    github.listRepos().then((list) => {
+      repos = list;
+    }).catch(() => {});
+  }
+}
+
+function persistSyncFields() {
+  store.setPrefs({
+    templateRepo: document.getElementById('syncRepo').value.trim(),
+    templatePath: document.getElementById('syncPath').value.trim() || 'data-push/templates.json',
+    templateBranch: document.getElementById('syncBranch').value.trim(),
+    templateAutoSync: document.getElementById('syncAuto').checked
+  });
+  refreshSyncStatus();
+}
+
+function refreshSyncStatus() {
+  const status = document.getElementById('syncStatus');
+  if (!status) return;
+  status.textContent = templateSync.configured()
+    ? t('sync.dest', { dest: templateSync.destLabel() })
+    : t('sync.notConfigured');
+}
 
 function renderUser() {
   const box = document.getElementById('userCard');

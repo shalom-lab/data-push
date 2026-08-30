@@ -192,6 +192,7 @@ main.page {
 .grid-4 { grid-template-columns: repeat(4, 1fr); margin: 28px 0; }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-2 { grid-template-columns: 1fr 1fr; gap: 20px; }
+.card-span { grid-column: 1 / -1; }
 
 .card {
   background: var(--bg-elev);

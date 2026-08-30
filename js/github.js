@@ -93,6 +93,20 @@ const github = {
     return btoa(binary);
   },
 
+  async putFile(fullName, filename, text, message, branch) {
+    const file = await this.getFile(fullName, filename, branch);
+    const body = {
+      message: message || 'Update file via Data Push',
+      content: this.encodeContent(text),
+      sha: file?.sha
+    };
+    if (branch) body.branch = branch;
+    return this.request(
+      `/repos/${fullName}/contents/${filename.split('/').map(encodeURIComponent).join('/')}`,
+      { method: 'PUT', body: JSON.stringify(body) }
+    );
+  },
+
   async appendJson(fullName, filename, entry, message, branch) {
     const file = await this.getFile(fullName, filename, branch);
     let existing = [];
