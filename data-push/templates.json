@@ -26,9 +26,16 @@
           "required": true
   },
           "category": {
-          "type": "text",
+          "type": "select",
           "label": "项目分类",
-          "required": false
+          "required": false,
+          "options": [
+          "网站",
+          "实用工具",
+          "Shiny应用",
+          "书籍",
+          "浏览器插件"
+  ]
   },
           "tags": {
           "type": "array",
