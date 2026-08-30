@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Data Push</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body data-page="push" data-title-key="push.title">
+  <header id="app-header"></header>
+  <main class="page">
+    <div class="page-head">
+      <h1 data-i18n="push.title"></h1>
+      <p data-i18n="push.subtitle"></p>
+    </div>
+    <section id="pushGated" class="card empty-state" hidden>
+      <h2 data-i18n="push.noTokenTitle"></h2>
+      <p data-i18n="push.noTokenBody"></p>
+      <p><a class="btn" href="settings.html" data-i18n="push.goSettings"></a></p>
+    </section>
+    <section id="pushWork" hidden>
+      <div class="split">
+        <aside class="card side-card">
+          <h3 data-i18n="push.target"></h3>
+          <div class="form-group">
+            <label data-i18n="push.repo"></label>
+            <div class="combo">
+              <input id="repoSearch" autocomplete="off" data-i18n-placeholder="push.repoPlaceholder" />
+              <div id="repoList" class="combo-list"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="push.template"></label>
+            <select id="templateSelect"></select>
+          </div>
+          <div class="form-group">
+            <label data-i18n="push.branch"></label>
+            <select id="branchSelect"><option value="">—</option></select>
+          </div>
+          <div class="form-group">
+            <label data-i18n="push.path"></label>
+            <div id="savePath" class="path-box">—</div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="push.fields"></label>
+            <pre id="fieldInfo" class="preview-block">—</pre>
+          </div>
+          <div class="meta-row">
+            <span id="fileStatus" data-i18n="push.existingUnknown"></span>
+            <button type="button" class="btn btn-sm btn-ghost" id="reloadFile" data-i18n="push.reloadFile"></button>
+          </div>
+          <p><a id="fileLink" hidden target="_blank" rel="noreferrer" data-i18n="push.viewFile"></a></p>
+        </aside>
+        <div class="card main-card">
+          <div id="formFields"></div>
+          <div class="form-group">
+            <label data-i18n="push.commit"></label>
+            <input id="commitMessage" value="Add new entry via Data Push" />
+          </div>
+          <div class="form-group">
+            <label data-i18n="push.previewTitle"></label>
+            <pre id="payloadPreview" class="preview-block">—</pre>
+          </div>
+          <div class="toolbar">
+            <button type="button" class="btn" id="submit" data-i18n="common.submit"></button>
+            <button type="button" class="btn btn-ghost" id="resetForm" data-i18n="common.reset"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="app-footer"></footer>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/github.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/page-push.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" role="img" aria-label="GitHub Data Push">
+  <rect width="1024" height="1024" rx="224" fill="#0D1117"/>
+  <rect x="168" y="168" width="688" height="688" rx="160" fill="#161B22" stroke="#58A6FF" stroke-width="40"/>
+  <path d="M512 292v360" stroke="#3FB950" stroke-width="72" stroke-linecap="round"/>
+  <path d="M352 452L512 292L672 452" stroke="#3FB950" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

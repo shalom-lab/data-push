@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Data Push</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body data-page="docs" data-title-key="docsPage.title">
+  <header id="app-header"></header>
+  <main class="page">
+    <div class="page-head">
+      <h1 data-i18n="docsPage.title"></h1>
+      <p data-i18n="docsPage.subtitle"></p>
+    </div>
+    <div class="docs-layout">
+      <aside class="docs-toc card">
+        <a href="#byok">BYOK</a>
+        <a href="#start">快速开始</a>
+        <a href="#template">模板格式</a>
+        <a href="#fields">字段类型</a>
+      </aside>
+      <article id="docsZh" class="card docs-article">
+        <h2 id="byok">BYOK（自带密钥）</h2>
+        <p>Token 只写进当前浏览器的 <code>localStorage</code>，页面只向 <code>api.github.com</code> 发请求，没有自己的后端。Classic PAT 勾选 <code>repo</code>；Fine-grained PAT 给目标仓库 <code>Contents: Read and write</code>。</p>
+        <h2 id="start">快速开始</h2>
+        <ol>
+          <li>打开设置，粘贴 Token 并验证。</li>
+          <li>在模板页按场景改字段，或导入原来的 JSON。</li>
+          <li>到推送页搜索仓库、选分支、填表、预览后提交。</li>
+        </ol>
+        <h2 id="template">模板格式</h2>
+        <p>与原先扩展兼容：顶层是模板字典，每项包含 <code>name</code>、<code>filename</code>、<code>fieldOrder</code>、<code>fields</code>。</p>
+        <pre>{
+  "my-project": {
+    "name": "我的项目",
+    "filename": "data-raw/projects.json",
+    "fieldOrder": ["title", "tags"],
+    "fields": {
+      "title": { "type": "text", "label": "名称", "required": true },
+      "tags": { "type": "array", "label": "标签", "default": [] }
+    }
+  }
+}</pre>
+        <h2 id="fields">字段类型</h2>
+        <ul>
+          <li><code>text</code> / <code>textarea</code> / <code>url</code></li>
+          <li><code>select</code> / <code>radio</code>（需要 <code>options</code>）</li>
+          <li><code>date</code> / <code>number</code> / <code>checkbox</code></li>
+          <li><code>array</code>：回车或空格添加标签</li>
+        </ul>
+        <p>提交时在对象上追加 <code>timestamp</code>，再写入仓库里的 JSON 数组。</p>
+      </article>
+      <article id="docsEn" class="card docs-article" hidden>
+        <h2 id="byok">BYOK</h2>
+        <p>The token stays in this browser’s <code>localStorage</code>. Requests go only to <code>api.github.com</code>. Classic PAT: <code>repo</code>. Fine-grained PAT: Contents Read and write on the target repos.</p>
+        <h2 id="start">Quick start</h2>
+        <ol>
+          <li>Paste and verify a token in Settings.</li>
+          <li>Edit templates visually or import the original JSON.</li>
+          <li>On Push, pick a repo and branch, fill the form, preview, submit.</li>
+        </ol>
+        <h2 id="template">Template format</h2>
+        <p>Compatible with the extension: a dictionary of templates, each with <code>name</code>, <code>filename</code>, <code>fieldOrder</code>, and <code>fields</code>.</p>
+        <pre>{
+  "my-project": {
+    "name": "My project",
+    "filename": "data-raw/projects.json",
+    "fieldOrder": ["title", "tags"],
+    "fields": {
+      "title": { "type": "text", "label": "Title", "required": true },
+      "tags": { "type": "array", "label": "Tags", "default": [] }
+    }
+  }
+}</pre>
+        <h2 id="fields">Field types</h2>
+        <ul>
+          <li><code>text</code> / <code>textarea</code> / <code>url</code></li>
+          <li><code>select</code> / <code>radio</code> (need <code>options</code>)</li>
+          <li><code>date</code> / <code>number</code> / <code>checkbox</code></li>
+          <li><code>array</code>: add tags with Enter or Space</li>
+        </ul>
+        <p>Each submit appends an object (plus <code>timestamp</code>) to the JSON array in the repo.</p>
+      </article>
+    </div>
+  </main>
+  <footer id="app-footer"></footer>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/github.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/page-docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Data Push</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body data-page="history" data-title-key="historyPage.title">
+  <header id="app-header"></header>
+  <main class="page">
+    <div class="page-head">
+      <h1 data-i18n="historyPage.title"></h1>
+      <p data-i18n="historyPage.subtitle"></p>
+    </div>
+    <div class="toolbar">
+      <button type="button" class="btn btn-sm btn-danger" id="clearHistory" data-i18n="historyPage.clear"></button>
+    </div>
+    <div id="historyList"></div>
+  </main>
+  <footer id="app-footer"></footer>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/github.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/page-history.js"></script>
+</body>
+</html>

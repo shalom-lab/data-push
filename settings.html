@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Data Push</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body data-page="settings" data-title-key="settingsPage.title">
+  <header id="app-header"></header>
+  <main class="page">
+    <div class="page-head">
+      <h1 data-i18n="settingsPage.title"></h1>
+      <p data-i18n="settingsPage.subtitle"></p>
+    </div>
+    <div class="grid-2">
+      <section class="card">
+        <h3 data-i18n="settingsPage.byokTitle"></h3>
+        <p data-i18n="settingsPage.byokLead"></p>
+        <div class="form-group">
+          <div class="token-row">
+            <input id="settingsToken" type="password" autocomplete="off" data-i18n-placeholder="settingsPage.tokenPlaceholder" />
+            <button type="button" class="btn btn-ghost" id="toggleToken" data-i18n="settingsPage.showToken"></button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button type="button" class="btn" id="saveToken" data-i18n="settingsPage.saveToken"></button>
+          <button type="button" class="btn btn-danger" id="resetToken" data-i18n="settingsPage.resetToken"></button>
+        </div>
+        <p><a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer" data-i18n="settingsPage.createToken"></a></p>
+        <div id="userCard" class="user-card" hidden></div>
+      </section>
+      <section class="card">
+        <h3 data-i18n="settingsPage.language"></h3>
+        <div class="form-group">
+          <select id="settingsLang"></select>
+        </div>
+        <h3 data-i18n="settingsPage.theme"></h3>
+        <div class="form-group">
+          <select id="themeSelect">
+            <option value="dark" data-i18n="settingsPage.themeDark"></option>
+            <option value="light" data-i18n="settingsPage.themeLight"></option>
+          </select>
+        </div>
+      </section>
+      <section class="card">
+        <h3 data-i18n="settingsPage.prefs"></h3>
+        <label class="check-row">
+          <input type="checkbox" id="rememberLast" />
+          <span data-i18n="settingsPage.remember"></span>
+        </label>
+        <div class="form-group" style="margin-top:16px">
+          <label data-i18n="settingsPage.commit"></label>
+          <input id="defaultCommit" />
+        </div>
+      </section>
+      <section class="card">
+        <h3 data-i18n="settingsPage.data"></h3>
+        <div class="toolbar">
+          <button type="button" class="btn btn-ghost" id="exportData" data-i18n="settingsPage.exportData"></button>
+          <button type="button" class="btn btn-danger" id="wipeData" data-i18n="settingsPage.wipe"></button>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer id="app-footer"></footer>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/github.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/page-settings.js"></script>
+</body>
+</html>

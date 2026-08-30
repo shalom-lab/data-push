@@ -1,0 +1,402 @@
+const SUPPORTED_LANGUAGES = {
+  zh: '简体中文',
+  en: 'English',
+  ja: '日本語',
+  ko: '한국어',
+  fr: 'Français',
+  de: 'Deutsch',
+  es: 'Español'
+};
+
+const I18N = {
+  zh: {
+    meta: { title: 'GitHub Data Push' },
+    nav: {
+      home: '首页',
+      push: '推送',
+      templates: '模板',
+      history: '历史',
+      docs: '文档',
+      settings: '设置',
+      theme: '切换主题',
+      byok: '配置 Token',
+      tokenReady: '已连接'
+    },
+    footer: { byok: 'BYOK：Token 只存在你的浏览器里，请求直达 GitHub API。' },
+    common: {
+      yes: '是',
+      no: '否',
+      save: '保存',
+      cancel: '取消',
+      loading: '加载中…',
+      submit: '提交数据',
+      search: '搜索',
+      optional: '可选',
+      required: '必填',
+      preview: '预览',
+      reset: '重置'
+    },
+    home: {
+      title: 'GitHub Data Push',
+      tagline: '用自己的模板，把结构化数据推进任意仓库。',
+      lead: '浏览器里完成填写、校验、追加写入。Token 由你自己保管，站点不经手密钥。',
+      cta: '开始推送',
+      ctaSecondary: '先看文档',
+      f1t: '自定义模板',
+      f1d: '文本、选项、日期、标签等字段，按场景组合。',
+      f2t: '直写仓库',
+      f2d: '追加到 JSON 数组，自动处理 sha 与 UTF-8。',
+      f3t: 'BYOK 隐私',
+      f3d: '密钥只留在本机，可随时重置或清空本地数据。',
+      f4t: '可视化编辑',
+      f4d: '卡片式改字段，也能继续用 JSON 导入导出。',
+      howTitle: '三步开始',
+      s1t: '放入 Token',
+      s1d: '在设置页粘贴具有 contents 写权限的 GitHub Token。',
+      s2t: '选仓库与模板',
+      s2d: '搜索仓库、选分支，确认保存路径。',
+      s3t: '填写并提交',
+      s3d: '预览将追加的对象，一键写入仓库。'
+    },
+    push: {
+      title: '推送数据',
+      subtitle: '选择目标仓库与模板，填写后追加到 JSON 文件。',
+      target: '推送目标',
+      repo: '仓库',
+      repoPlaceholder: '搜索 owner/repo',
+      template: '模板',
+      branch: '分支',
+      path: '保存路径',
+      fields: '字段结构',
+      commit: '提交说明',
+      existing: '现有条目',
+      existingUnknown: '选择仓库后可预览文件',
+      existingCount: '当前约 {n} 条',
+      existingMissing: '文件尚不存在，将自动创建',
+      previewTitle: '即将追加',
+      noTokenTitle: '还没有 Token',
+      noTokenBody: '本站使用 BYOK：请到设置页填入你自己的 GitHub Token，才会向 api.github.com 发请求。',
+      goSettings: '去设置',
+      viewFile: '在 GitHub 查看',
+      reloadFile: '刷新文件状态'
+    },
+    form: {
+      pleaseSelect: '请选择{field}',
+      tagPlaceholder: '输入后按回车或空格添加'
+    },
+    templatesPage: {
+      title: '模板管理',
+      subtitle: '可视化编辑字段，或直接改 JSON。导入导出与扩展版格式兼容。',
+      list: '模板列表',
+      add: '新建模板',
+      visual: '可视化',
+      json: 'JSON',
+      key: '标识',
+      name: '显示名',
+      filename: '文件路径',
+      fields: '字段',
+      addField: '添加字段',
+      fieldKey: '字段名',
+      fieldType: '类型',
+      fieldLabel: '标签',
+      fieldDefault: '默认值',
+      fieldOptions: '选项（逗号分隔）',
+      fieldRequired: '必填',
+      fieldPlaceholder: '占位提示',
+      duplicate: '复制',
+      delete: '删除',
+      reset: '恢复默认模板',
+      saveAll: '保存全部',
+      import: '导入',
+      export: '导出',
+      empty: '还没有模板，点击新建或恢复默认。'
+    },
+    historyPage: {
+      title: '推送历史',
+      subtitle: '仅保存在本机，方便回填或核对提交。',
+      empty: '还没有本地记录。成功推送后会出现在这里。',
+      reuse: '回填到表单',
+      open: '打开文件',
+      remove: '删除',
+      clear: '清空历史',
+      repo: '仓库',
+      template: '模板',
+      time: '时间'
+    },
+    settingsPage: {
+      title: '设置',
+      subtitle: '密钥、语言与本地数据都在这一页。',
+      byokTitle: 'BYOK · GitHub Token',
+      byokLead: 'Classic PAT 勾选 repo；Fine-grained PAT 对目标仓库授予 Contents: Read and write。',
+      tokenPlaceholder: 'ghp_… 或 github_pat_…',
+      saveToken: '保存并验证',
+      resetToken: '重置 Token',
+      testOk: '已连接为 @{login}',
+      showToken: '显示',
+      hideToken: '隐藏',
+      createToken: '去 GitHub 创建 Token',
+      language: '语言',
+      theme: '外观',
+      themeDark: '深色',
+      themeLight: '浅色',
+      prefs: '推送偏好',
+      remember: '记住上次的仓库与模板',
+      commit: '默认提交说明',
+      data: '本地数据',
+      exportData: '导出本地配置',
+      wipe: '清空本站全部数据',
+      wipeConfirm: '将删除 Token、模板、历史和偏好，且无法恢复。确定吗？'
+    },
+    docsPage: { title: '使用文档', subtitle: 'Token、模板格式与字段类型。' },
+    token: {
+      confirmReset: '确定要重置 Token 吗？',
+      successUpdate: 'Token 已验证并保存',
+      successReset: 'Token 已清除',
+      required: '请输入 GitHub Token'
+    },
+    templates: {
+      successSave: '模板已保存',
+      successImport: '模板已导入（尚未写入，请再点保存）',
+      errorFormat: '模板格式错误',
+      confirmDelete: '删除该模板？',
+      confirmReset: '恢复内置默认模板并覆盖当前编辑？'
+    },
+    success: { submit: '提交成功' },
+    error: {
+      selectTemplate: '请先选择模板',
+      selectRepo: '请选择仓库',
+      loadRepos: '加载仓库失败',
+      fieldRequired: '请填写{field}',
+      accessDenied: '权限不足，请检查 Token 是否能写该仓库。',
+      noToken: '尚未配置 Token',
+      unauthorized: 'Token 无效或已过期',
+      notFound: '资源不存在',
+      invalidTemplate: '模板无效'
+    },
+    notice: { savePath: '保存路径', viewFields: '查看字段' },
+    welcome: {
+      greeting: '欢迎使用 GitHub Data Push',
+      tokenTip: '请先在设置中配置你的 GitHub Token'
+    }
+  },
+  en: {
+    meta: { title: 'GitHub Data Push' },
+    nav: {
+      home: 'Home',
+      push: 'Push',
+      templates: 'Templates',
+      history: 'History',
+      docs: 'Docs',
+      settings: 'Settings',
+      theme: 'Toggle theme',
+      byok: 'Add token',
+      tokenReady: 'Connected'
+    },
+    footer: { byok: 'BYOK: your token stays in this browser and talks only to the GitHub API.' },
+    common: {
+      yes: 'Yes',
+      no: 'No',
+      save: 'Save',
+      cancel: 'Cancel',
+      loading: 'Loading…',
+      submit: 'Submit',
+      search: 'Search',
+      optional: 'Optional',
+      required: 'Required',
+      preview: 'Preview',
+      reset: 'Reset'
+    },
+    home: {
+      title: 'GitHub Data Push',
+      tagline: 'Push structured records into any repo with your own templates.',
+      lead: 'Fill, validate, and append in the browser. You keep the key; this site never sees a server-side secret.',
+      cta: 'Start pushing',
+      ctaSecondary: 'Read the docs',
+      f1t: 'Custom templates',
+      f1d: 'Text, choices, dates, tags — compose fields per workflow.',
+      f2t: 'Write the repo',
+      f2d: 'Append to a JSON array. SHA and UTF-8 are handled for you.',
+      f3t: 'BYOK privacy',
+      f3d: 'The token lives locally. Reset or wipe anytime.',
+      f4t: 'Visual editor',
+      f4d: 'Edit fields as cards, or keep the JSON import/export flow.',
+      howTitle: 'Three steps',
+      s1t: 'Bring your token',
+      s1d: 'Paste a GitHub token with contents write access.',
+      s2t: 'Pick repo and template',
+      s2d: 'Search repos, choose a branch, confirm the file path.',
+      s3t: 'Fill and submit',
+      s3d: 'Preview the object, then append it to the file.'
+    },
+    push: {
+      title: 'Push data',
+      subtitle: 'Choose a repository and template, then append one JSON object.',
+      target: 'Destination',
+      repo: 'Repository',
+      repoPlaceholder: 'Search owner/repo',
+      template: 'Template',
+      branch: 'Branch',
+      path: 'Save path',
+      fields: 'Fields',
+      commit: 'Commit message',
+      existing: 'Existing entries',
+      existingUnknown: 'Select a repo to preview the file',
+      existingCount: 'About {n} entries',
+      existingMissing: 'File does not exist yet and will be created',
+      previewTitle: 'Will append',
+      noTokenTitle: 'No token yet',
+      noTokenBody: 'This app is BYOK. Add your GitHub token in Settings before any request is sent to api.github.com.',
+      goSettings: 'Open settings',
+      viewFile: 'View on GitHub',
+      reloadFile: 'Refresh file'
+    },
+    form: {
+      pleaseSelect: 'Select {field}',
+      tagPlaceholder: 'Press Enter or Space to add'
+    },
+    templatesPage: {
+      title: 'Templates',
+      subtitle: 'Edit fields visually or as JSON. Import/export matches the original extension format.',
+      list: 'Template list',
+      add: 'New template',
+      visual: 'Visual',
+      json: 'JSON',
+      key: 'Key',
+      name: 'Display name',
+      filename: 'File path',
+      fields: 'Fields',
+      addField: 'Add field',
+      fieldKey: 'Field key',
+      fieldType: 'Type',
+      fieldLabel: 'Label',
+      fieldDefault: 'Default',
+      fieldOptions: 'Options (comma separated)',
+      fieldRequired: 'Required',
+      fieldPlaceholder: 'Placeholder',
+      duplicate: 'Duplicate',
+      delete: 'Delete',
+      reset: 'Restore defaults',
+      saveAll: 'Save all',
+      import: 'Import',
+      export: 'Export',
+      empty: 'No templates yet. Create one or restore defaults.'
+    },
+    historyPage: {
+      title: 'History',
+      subtitle: 'Stored only on this device for refill and audit.',
+      empty: 'No local records yet. Successful pushes will appear here.',
+      reuse: 'Reuse in form',
+      open: 'Open file',
+      remove: 'Remove',
+      clear: 'Clear history',
+      repo: 'Repo',
+      template: 'Template',
+      time: 'Time'
+    },
+    settingsPage: {
+      title: 'Settings',
+      subtitle: 'Keys, language, and local data live here.',
+      byokTitle: 'BYOK · GitHub Token',
+      byokLead: 'Classic PAT: repo scope. Fine-grained PAT: Contents Read and write on the target repos.',
+      tokenPlaceholder: 'ghp_… or github_pat_…',
+      saveToken: 'Save and verify',
+      resetToken: 'Reset token',
+      testOk: 'Connected as @{login}',
+      showToken: 'Show',
+      hideToken: 'Hide',
+      createToken: 'Create a token on GitHub',
+      language: 'Language',
+      theme: 'Appearance',
+      themeDark: 'Dark',
+      themeLight: 'Light',
+      prefs: 'Push preferences',
+      remember: 'Remember last repo and template',
+      commit: 'Default commit message',
+      data: 'Local data',
+      exportData: 'Export local config',
+      wipe: 'Wipe all site data',
+      wipeConfirm: 'This deletes token, templates, history, and prefs. Continue?'
+    },
+    docsPage: { title: 'Documentation', subtitle: 'Token, template format, and field types.' },
+    token: {
+      confirmReset: 'Reset the token?',
+      successUpdate: 'Token verified and saved',
+      successReset: 'Token cleared',
+      required: 'Please enter a GitHub token'
+    },
+    templates: {
+      successSave: 'Templates saved',
+      successImport: 'Imported (click Save all to persist)',
+      errorFormat: 'Invalid template format',
+      confirmDelete: 'Delete this template?',
+      confirmReset: 'Restore built-in templates and overwrite current edits?'
+    },
+    success: { submit: 'Submitted successfully' },
+    error: {
+      selectTemplate: 'Select a template first',
+      selectRepo: 'Select a repository',
+      loadRepos: 'Failed to load repositories',
+      fieldRequired: 'Please fill in {field}',
+      accessDenied: 'Permission denied. Check that the token can write this repository.',
+      noToken: 'No token configured',
+      unauthorized: 'Token is invalid or expired',
+      notFound: 'Not found',
+      invalidTemplate: 'Invalid template'
+    },
+    notice: { savePath: 'Save path', viewFields: 'View fields' },
+    welcome: {
+      greeting: 'Welcome to GitHub Data Push',
+      tokenTip: 'Configure your GitHub token in Settings first'
+    }
+  }
+};
+
+I18N.ja = {
+  ...I18N.en,
+  nav: { ...I18N.en.nav, home: 'ホーム', push: 'プッシュ', templates: 'テンプレート', history: '履歴', docs: 'ドキュメント', settings: '設定', byok: 'Token 設定', tokenReady: '接続済み' },
+  common: { ...I18N.en.common, submit: '送信', loading: '読み込み中…', yes: 'はい', no: 'いいえ' },
+  home: { ...I18N.en.home, tagline: '独自テンプレートでリポジトリへデータを送る', cta: '開始する' },
+  error: { ...I18N.en.error, selectTemplate: 'テンプレートを選択してください', selectRepo: 'リポジトリを選択してください', fieldRequired: '{field}を入力してください' },
+  success: { submit: '送信が完了しました' },
+  token: { ...I18N.en.token, required: 'トークンを入力してください', confirmReset: 'トークンをリセットしますか？' }
+};
+
+I18N.ko = {
+  ...I18N.en,
+  nav: { ...I18N.en.nav, home: '홈', push: '푸시', templates: '템플릿', history: '기록', docs: '문서', settings: '설정', byok: '토큰 설정', tokenReady: '연결됨' },
+  common: { ...I18N.en.common, submit: '제출', loading: '로딩 중…', yes: '예', no: '아니오' },
+  home: { ...I18N.en.home, tagline: '내 템플릿으로 저장소에 데이터를 푸시', cta: '시작하기' },
+  error: { ...I18N.en.error, selectTemplate: '템플릿을 선택해 주세요', selectRepo: '저장소를 선택해 주세요', fieldRequired: '{field}을(를) 입력해 주세요' },
+  success: { submit: '제출되었습니다' },
+  token: { ...I18N.en.token, required: '토큰을 입력해 주세요', confirmReset: '토큰을 초기화하시겠습니까?' }
+};
+
+I18N.fr = {
+  ...I18N.en,
+  nav: { ...I18N.en.nav, home: 'Accueil', push: 'Envoyer', templates: 'Modèles', history: 'Historique', docs: 'Docs', settings: 'Paramètres', byok: 'Ajouter un token', tokenReady: 'Connecté' },
+  common: { ...I18N.en.common, submit: 'Soumettre', loading: 'Chargement…', yes: 'Oui', no: 'Non' },
+  home: { ...I18N.en.home, tagline: 'Poussez des données structurées avec vos modèles', cta: 'Commencer' },
+  error: { ...I18N.en.error, selectTemplate: 'Sélectionnez un modèle', selectRepo: 'Sélectionnez un dépôt', fieldRequired: 'Veuillez remplir {field}' },
+  success: { submit: 'Soumis avec succès' },
+  token: { ...I18N.en.token, required: 'Veuillez entrer un token', confirmReset: 'Réinitialiser le token ?' }
+};
+
+I18N.de = {
+  ...I18N.en,
+  nav: { ...I18N.en.nav, home: 'Start', push: 'Push', templates: 'Vorlagen', history: 'Verlauf', docs: 'Doku', settings: 'Einstellungen', byok: 'Token setzen', tokenReady: 'Verbunden' },
+  common: { ...I18N.en.common, submit: 'Absenden', loading: 'Laden…', yes: 'Ja', no: 'Nein' },
+  home: { ...I18N.en.home, tagline: 'Strukturierte Daten mit eigenen Vorlagen ins Repo', cta: 'Loslegen' },
+  error: { ...I18N.en.error, selectTemplate: 'Bitte Vorlage wählen', selectRepo: 'Bitte Repository wählen', fieldRequired: 'Bitte {field} ausfüllen' },
+  success: { submit: 'Erfolgreich übermittelt' },
+  token: { ...I18N.en.token, required: 'Bitte Token eingeben', confirmReset: 'Token wirklich zurücksetzen?' }
+};
+
+I18N.es = {
+  ...I18N.en,
+  nav: { ...I18N.en.nav, home: 'Inicio', push: 'Enviar', templates: 'Plantillas', history: 'Historial', docs: 'Docs', settings: 'Ajustes', byok: 'Añadir token', tokenReady: 'Conectado' },
+  common: { ...I18N.en.common, submit: 'Enviar', loading: 'Cargando…', yes: 'Sí', no: 'No' },
+  home: { ...I18N.en.home, tagline: 'Empuja datos con tus propias plantillas', cta: 'Empezar' },
+  error: { ...I18N.en.error, selectTemplate: 'Seleccione una plantilla', selectRepo: 'Seleccione un repositorio', fieldRequired: 'Complete {field}' },
+  success: { submit: 'Enviado con éxito' },
+  token: { ...I18N.en.token, required: 'Introduzca un token', confirmReset: '¿Restablecer el token?' }
+};

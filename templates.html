@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Data Push</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body data-page="templates" data-title-key="templatesPage.title">
+  <header id="app-header"></header>
+  <main class="page">
+    <div class="page-head">
+      <h1 data-i18n="templatesPage.title"></h1>
+      <p data-i18n="templatesPage.subtitle"></p>
+    </div>
+    <div class="toolbar">
+      <button type="button" class="btn btn-sm" id="addTemplate" data-i18n="templatesPage.add"></button>
+      <button type="button" class="btn btn-sm btn-muted" id="saveAll" data-i18n="templatesPage.saveAll"></button>
+      <button type="button" class="btn btn-sm btn-ghost" id="importTemplates" data-i18n="templatesPage.import"></button>
+      <button type="button" class="btn btn-sm btn-ghost" id="exportTemplates" data-i18n="templatesPage.export"></button>
+      <button type="button" class="btn btn-sm btn-ghost" id="resetDefaults" data-i18n="templatesPage.reset"></button>
+      <input id="importFile" type="file" accept=".json,application/json" hidden />
+    </div>
+    <div class="split">
+      <aside class="card">
+        <h3 data-i18n="templatesPage.list"></h3>
+        <div id="templateList"></div>
+      </aside>
+      <section class="card">
+        <div class="tabs">
+          <button type="button" class="btn btn-sm tab active" id="tabVisual" data-i18n="templatesPage.visual"></button>
+          <button type="button" class="btn btn-sm tab" id="tabJson" data-i18n="templatesPage.json"></button>
+        </div>
+        <div id="editorPane"></div>
+      </section>
+    </div>
+  </main>
+  <footer id="app-footer"></footer>
+  <script src="js/i18n.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/github.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/page-templates.js"></script>
+</body>
+</html>
