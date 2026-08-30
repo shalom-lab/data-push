@@ -137,7 +137,7 @@ function refreshTokenChip() {
   if (!chip) return;
   chip.classList.toggle('ok', !!(store.token && store.user));
   if (store.token && store.user) {
-    chip.innerHTML = `<img src="${escapeHtml(store.user.avatar_url)}" alt="" /><span>@${escapeHtml(store.user.login)}</span>`;
+    chip.innerHTML = `<img src="${escapeHtml(store.user.avatar_url)}" width="22" height="22" alt="" /><span>@${escapeHtml(store.user.login)}</span>`;
   } else if (store.token) {
     chip.textContent = t('nav.tokenReady');
   } else {
