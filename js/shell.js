@@ -23,24 +23,10 @@ function mountShell(page) {
     refreshTokenChip();
   });
 
-  header?.querySelector('#langSelect')?.addEventListener('change', (e) => {
-    store.setLanguage(e.target.value);
-    ui.applyI18n();
-    mountShell(page);
-    ui.applyI18n();
-    refreshTokenChip();
-    document.dispatchEvent(new CustomEvent('gdp:langchange'));
-  });
+  bindLangMenu(page);
 }
 
 function renderHeader(page) {
-  const langs = Object.entries(SUPPORTED_LANGUAGES)
-    .map(
-      ([code, name]) =>
-        `<option value="${code}" ${code === store.language ? 'selected' : ''}>${name}</option>`
-    )
-    .join('');
-
   const links = [
     ['index.html', 'home', 'nav.home'],
     ['push.html', 'push', 'nav.push'],
@@ -64,17 +50,20 @@ function renderHeader(page) {
           )
           .join('')}
       </nav>
-      <div class="tool-bar">
-        <a id="tokenChip" class="tool-item tool-chip" href="settings.html"></a>
-        <label class="tool-item tool-lang">
-          <select id="langSelect" aria-label="Language">${langs}</select>
-        </label>
-        <button type="button" id="themeToggle" class="tool-item tool-icon" data-i18n-title="nav.theme" aria-label="theme">
-          ${themeIconSvg(store.theme)}
-        </button>
-        <a class="tool-item tool-icon" href="https://github.com/shalom-lab/data-push" target="_blank" rel="noreferrer" data-i18n-title="nav.repo" aria-label="GitHub">
-          ${githubIconSvg()}
-        </a>
+      <div class="nav-right">
+        <a id="tokenChip" class="user-link" href="settings.html"></a>
+        <div class="icon-group">
+          <div class="lang-menu">
+            <button type="button" id="langToggle" class="icon-btn" aria-label="Language">${langShort(store.language)}</button>
+            <div id="langMenu" class="lang-pop" hidden>${langMenuItems()}</div>
+          </div>
+          <button type="button" id="themeToggle" class="icon-btn" data-i18n-title="nav.theme" aria-label="theme">
+            ${themeIconSvg(store.theme)}
+          </button>
+          <a class="icon-btn" href="https://github.com/shalom-lab/data-push" target="_blank" rel="noreferrer" data-i18n-title="nav.repo" aria-label="GitHub">
+            ${githubIconSvg()}
+          </a>
+        </div>
       </div>
     </div>
   `;
@@ -87,6 +76,49 @@ function renderFooter() {
       <p><a href="https://github.com/shalom-lab/data-push" target="_blank" rel="noreferrer">shalom-lab/data-push</a> · MIT</p>
     </div>
   `;
+}
+
+const LANG_SHORT = { zh: '中', en: 'EN', ja: 'あ', ko: '한', fr: 'FR', de: 'DE', es: 'ES' };
+
+function langShort(code) {
+  return LANG_SHORT[code] || (code || 'EN').toUpperCase().slice(0, 2);
+}
+
+function langMenuItems() {
+  return Object.entries(SUPPORTED_LANGUAGES)
+    .map(
+      ([code, name]) =>
+        `<button type="button" class="lang-opt${code === store.language ? ' active' : ''}" data-lang="${code}">${name}</button>`
+    )
+    .join('');
+}
+
+function bindLangMenu(page) {
+  const toggle = document.getElementById('langToggle');
+  const menu = document.getElementById('langMenu');
+  if (!toggle || !menu) return;
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menu.hidden = !menu.hidden;
+  });
+  menu.querySelectorAll('[data-lang]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      store.setLanguage(btn.dataset.lang);
+      mountShell(page);
+      ui.applyI18n();
+      refreshTokenChip();
+      document.dispatchEvent(new CustomEvent('gdp:langchange'));
+    });
+  });
+  if (!window._gdpLangClose) {
+    window._gdpLangClose = true;
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.lang-menu')) {
+        const pop = document.getElementById('langMenu');
+        if (pop) pop.hidden = true;
+      }
+    });
+  }
 }
 
 function themeIconSvg(theme) {
