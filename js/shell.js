@@ -53,7 +53,7 @@ function renderHeader(page) {
   return `
     <div class="nav-inner">
       <a class="brand" href="index.html">
-        <img src="logo.svg" alt="" width="32" height="32" />
+        <img src="icons/icon128.png" alt="" width="32" height="32" />
         <span>Data Push</span>
       </a>
       <nav class="nav-links">

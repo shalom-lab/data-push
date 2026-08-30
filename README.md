@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="logo.svg" alt="GitHub Data Push logo" width="128" />
+<img src="icons/icon128.png" alt="GitHub Data Push logo" width="128" />
 
 **用自己的模板，把结构化数据推进任意仓库。**
 

@@ -8,9 +8,9 @@
   --muted: #8b949e;
   --accent: #58a6ff;
   --accent-2: #88d1f1;
-  --green: #3fb950;
-  --green-btn: #238636;
-  --green-hover: #2ea043;
+  --green: #f62323;
+  --green-btn: #f62323;
+  --green-hover: #d91c1c;
   --danger: #f85149;
   --danger-btn: #da3633;
   --purple: #a371f7;
@@ -30,9 +30,9 @@
   --muted: #656d76;
   --accent: #0969da;
   --accent-2: #218bff;
-  --green: #1a7f37;
-  --green-btn: #1f883d;
-  --green-hover: #1a7f37;
+  --green: #d91c1c;
+  --green-btn: #f62323;
+  --green-hover: #d91c1c;
   --danger: #cf222e;
   --danger-btn: #cf222e;
   --purple: #8250df;
@@ -82,7 +82,7 @@ a:hover { text-decoration: underline; }
   flex-shrink: 0;
 }
 
-.brand img { border-radius: 8px; }
+.brand img { border-radius: 8px; background: #0d1117; }
 
 .nav-links {
   display: flex;
@@ -182,7 +182,7 @@ main.page {
   pointer-events: none;
 }
 
-.hero-logo { width: 72px; height: 72px; border-radius: 18px; }
+.hero-logo { width: 72px; height: 72px; border-radius: 18px; background: #0d1117; padding: 8px; }
 .hero h1 { font-size: clamp(36px, 6vw, 56px); margin: 16px 0 8px; letter-spacing: -0.05em; color: var(--accent); }
 .hero .tagline { font-size: 22px; font-weight: 600; color: var(--accent-2); margin: 0 0 12px; }
 .hero .lead { max-width: 640px; color: var(--muted); margin: 0 0 28px; }

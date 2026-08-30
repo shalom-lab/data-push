@@ -26,8 +26,8 @@ jobs:
       - name: Pack site files
         run: |
           mkdir -p _site
-          cp index.html push.html templates.html history.html settings.html docs.html 404.html logo.svg .nojekyll LICENSE _site/
-          cp -r css js _site/
+          cp index.html push.html templates.html history.html settings.html docs.html 404.html .nojekyll LICENSE _site/
+          cp -r css js icons _site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
