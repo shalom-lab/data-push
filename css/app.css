@@ -278,20 +278,27 @@ main.page {
   font-size: 13px;
 }
 
-.btn, button.btn {
+.btn,
+a.btn,
+button.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
   height: var(--ctrl);
   min-height: var(--ctrl);
   padding: 0 12px;
   border: 1px solid transparent;
   border-radius: 8px;
+  font: inherit;
   font-size: 13px;
   font-weight: 600;
   line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
   cursor: pointer;
   text-decoration: none;
   background: var(--green-btn);
@@ -315,14 +322,44 @@ main.page {
   border-color: var(--border);
 }
 
-.btn-danger, button.btn-danger {
+.btn-danger,
+a.btn-danger,
+button.btn-danger {
   background: var(--danger-btn);
   color: #fff;
 }
 
+.btn-danger:hover {
+  background: color-mix(in srgb, var(--danger-btn) 84%, #000);
+  color: #fff;
+}
+
 .btn-wide { width: 100%; }
-.btn-sm { height: 28px; min-height: 28px; padding: 0 8px; font-size: 12px; }
-.btn-lg { height: 40px; min-height: 40px; padding: 0 18px; font-size: 15px; border-radius: 10px; }
+
+.btn.btn-sm,
+a.btn-sm,
+button.btn-sm {
+  height: 28px;
+  min-height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.btn.btn-lg,
+a.btn-lg,
+button.btn-lg {
+  height: 40px;
+  min-height: 40px;
+  padding: 0 18px;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+.toolbar .btn,
+.history-actions .btn,
+.hero-actions .btn {
+  min-width: 88px;
+}
 
 .form-group { margin-bottom: 16px; }
 .form-group label, .label {
