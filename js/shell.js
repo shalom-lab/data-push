@@ -64,13 +64,15 @@ function renderHeader(page) {
           )
           .join('')}
       </nav>
-      <div class="nav-tools">
-        <a id="tokenChip" class="token-chip" href="settings.html"></a>
-        <select id="langSelect" class="lang-select" aria-label="Language">${langs}</select>
-        <button type="button" id="themeToggle" class="icon-btn" data-i18n-title="nav.theme" aria-label="theme">
+      <div class="tool-bar">
+        <a id="tokenChip" class="tool-item tool-chip" href="settings.html"></a>
+        <label class="tool-item tool-lang">
+          <select id="langSelect" aria-label="Language">${langs}</select>
+        </label>
+        <button type="button" id="themeToggle" class="tool-item tool-icon" data-i18n-title="nav.theme" aria-label="theme">
           ${themeIconSvg(store.theme)}
         </button>
-        <a class="icon-btn" href="https://github.com/shalom-lab/data-push" target="_blank" rel="noreferrer" data-i18n-title="nav.repo" aria-label="GitHub">
+        <a class="tool-item tool-icon" href="https://github.com/shalom-lab/data-push" target="_blank" rel="noreferrer" data-i18n-title="nav.repo" aria-label="GitHub">
           ${githubIconSvg()}
         </a>
       </div>
@@ -101,14 +103,12 @@ function githubIconSvg() {
 function refreshTokenChip() {
   const chip = document.getElementById('tokenChip');
   if (!chip) return;
+  chip.classList.toggle('ok', !!(store.token && store.user));
   if (store.token && store.user) {
-    chip.classList.add('ok');
     chip.innerHTML = `<img src="${escapeHtml(store.user.avatar_url)}" alt="" /><span>@${escapeHtml(store.user.login)}</span>`;
   } else if (store.token) {
-    chip.classList.add('ok');
     chip.textContent = t('nav.tokenReady');
   } else {
-    chip.classList.remove('ok');
     chip.textContent = t('nav.byok');
   }
 }
