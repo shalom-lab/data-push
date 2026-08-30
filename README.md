@@ -107,8 +107,6 @@ npx --yes serve .
 
 MIT · 见 [LICENSE](LICENSE)
 
-原浏览器扩展源码保留在 `push-data-main/`。
-
 ## English
 
 A BYOK static site that appends structured JSON to any GitHub repo using custom templates. Token stays in your browser; CI deploys Pages on every push to `main`. Repo: [shalom-lab/data-push](https://github.com/shalom-lab/data-push).
