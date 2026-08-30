@@ -7,7 +7,7 @@
       "link",
       "description",
       "category",
-      "tags"
+      "keywords"
   ],
       "fields": {
           "title": {
@@ -37,7 +37,7 @@
           "浏览器插件"
   ]
   },
-          "tags": {
+          "keywords": {
           "type": "array",
           "label": "标签",
           "required": false,
